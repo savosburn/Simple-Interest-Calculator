@@ -16,7 +16,7 @@ public class App {
 
         double principal = myApp.readPrincipal();
         double rate = myApp.readRate();
-        int numYears = myApp.readYears();
+        double numYears = myApp.readYears();
 
         String investment = myApp.calculateInvestment(principal, rate, numYears);
 
@@ -26,17 +26,38 @@ public class App {
 
     public double readPrincipal() {
         System.out.print("Enter the principal: ");
+
+        // User can only enter number
+        while (!in.hasNextDouble()) {
+            System.out.print("Invalid amount. Enter again: ");
+            in.next();
+        }
+
         return in.nextDouble();
     }
 
     public double readRate() {
         System.out.print("Enter the rate of interest: ");
+
+        // User can only enter number
+        while (!in.hasNextDouble()) {
+            System.out.print("Invalid rate. Enter again: ");
+            in.next();
+        }
+
         return in.nextDouble() / 100;
     }
 
-    public int readYears() {
+    public double readYears() {
         System.out.print("Enter the number of years: ");
-        return in.nextInt();
+
+        // User can only enter number
+        while (!in.hasNextDouble()) {
+            System.out.print("Invalid number. Enter again: ");
+            in.next();
+        }
+
+        return in.nextDouble();
     }
 
     public String calculateInvestment(double principal, double rate, double time) {
@@ -44,8 +65,16 @@ public class App {
         return df.format(principal * (1 + rate * time));
     }
 
-    public String generateString(int numYears, double rate, String investment) {
-        return String.format("After %d years at %.1f%%, the investment will be worth %s.", numYears, rate * 100, investment);
+    public String generateString(double numYears, double rate, String investment) {
+        int newYears;
+        String years = Double.toString(numYears);
+
+        if (numYears % 1 == 0) {
+            newYears = (int) numYears;
+            years = String.format("%d", newYears);
+        }
+
+        return String.format("After %s years at %.1f%%, the investment will be worth %s.", years, rate * 100, investment);
     }
 
     public void output(String outputString) {

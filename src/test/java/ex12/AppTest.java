@@ -14,13 +14,13 @@ class AppTest {
     public void output_string_includes_years_rate_and_total() {
         App myApp = new App();
 
-        int numYears = 4;
-        double rate = .043;
-        double calculation = 1500 * (1 + numYears * rate);
-        String investment = String.format("$%.2f", calculation);
+
+        String investment = myApp.calculateInvestment(1500, .043, 4);
 
         String expectedOutput = "After 4 years at 4.3%, the investment will be worth $1758.";
 
-        String actualOutput = myApp.generateString(numYears, rate, investment);
+        String actualOutput = myApp.generateString(4, .043, investment);
+
+        assertEquals(expectedOutput, actualOutput);
     }
 }
